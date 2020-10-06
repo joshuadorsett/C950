@@ -1,4 +1,4 @@
-from HashTable import *
+from DataStructures.HashTable import *
 
 class Truck:
     def __init__(self, truckId):

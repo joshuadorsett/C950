@@ -1,6 +1,6 @@
-from Package import *
-from HashTable import *
-from reader import *
+from Models.Package import *
+from DataStructures.HashTable import *
+from Data.reader import *
 
 if __name__ == "__main__":
 
