@@ -18,9 +18,9 @@ if __name__ == "__main__":
     # build a graph of locations
     saltLakeCity = Graph(locations)
 
-    # setting the graph index of each package
+    # setting the graph index of each package's destination address
     for i in range(locations.getSize()):
-        packages.getValue(i).setGraphIndex(locations)
+        packages.getValue(i).setGraphDestinationIndex(locations)
 
     # create and load trucks
     # returns a list of all trucks

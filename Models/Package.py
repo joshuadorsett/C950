@@ -13,7 +13,7 @@ class Package:
     def setDeliveryStatus(self, status):
         self._deliveryStatus = status
 
-    def setGraphIndex(self, locations):
+    def setGraphDestinationIndex(self, locations):
         for i in range(40):
             if locations.getValue(i).getAddress() == self._address:
                 self._graphIndex = locations.getValue(i).getIndex()
