@@ -1,7 +1,22 @@
-def importAllData():
-    print (importDistances())
-    print (importLocations())
-    print (importPackages())
+from DataStructures.HashTable import *
+from Models.Package import *
+
+def processData():
+    distanceLists = importDistances()
+    locationLists = importLocations()
+    packageLists = importPackages()
+
+    distances = HashTable(len(distanceLists))
+    locations = HashTable(len(locationLists))
+    packages = HashTable(len(packageLists))
+
+    for i in range(len(packageLists)):
+            current = packageLists[i]
+            p = Package(current[0], current[1], current[2], current[4], current[5], current[6], current[7], None)
+            packages.insert(current[0], p)
+
+
+
 
 def importDistances():
     distanceFile = open('Data/distances.txt')

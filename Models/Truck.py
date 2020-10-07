@@ -2,21 +2,31 @@ from DataStructures.HashTable import *
 
 class Truck:
     def __init__(self, truckId):
-        self.truckId = truckId
-        self.maxCargo = 16
-        self.speed = 18
-        self.cargoSize = 0
-        self.packages = HashTable(16)
+        self._truckId = truckId
+        self._maxCargo = 16
+        self._speed = 18
+        self._cargoSize = 0
+        self._packages = HashTable(16)
 
-    def addCargo(self, packageId, weight):
-        if self.cargoSize < self.maxCargo:
-            self.packages.insert(packageId, weight)
-            self.cargoSize += 1
+    def getId(self):
+        return self._truckId
+
+    def getPackages(self):
+        return self._packages
+
+    def addCargo(self, packageId, package):
+        if self._cargoSize < self._maxCargo:
+            self._packages.insert(packageId, package)
+            self._cargoSize += 1
         else:
             print("cargo is full.")
 
     def removeCargo(self, packageId):
-        self.packages.delete(packageId)
+        self._packages.delete(packageId)
+        if self._cargoSize > 0:
+            self._cargoSize -= 1
+        else:
+            print("cargo is empty.")
 
 
 

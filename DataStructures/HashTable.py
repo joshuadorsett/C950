@@ -1,25 +1,25 @@
 class HashTable:
     def __init__(self, startingCapacity=40):
-        self.table = []
+        self._table = []
         for i in range(startingCapacity):
-            self.table.append([])
+            self._table.append([None])
 
     def insert(self, key, value):
-        hashedKey = hash(key) % len(self.table)
+        hashedKey = hash(key) % len(self._table)
         # if index is found in table
-        if self.table[hashedKey] is not None:
-            self.table[hashedKey] = [key, value]
+        if self._table[hashedKey] is not None:
+            self._table[hashedKey] = [key, value]
         # if index is not found in table
         else:
-            self.table[hashedKey].append([key, value])
+            self._table[hashedKey].append([key, value])
 
-    def search(self, key):
-        hashedKey = hash(key) % len(self.table)
-        if self.table[hashedKey] is not None:
-            return self.table[hashedKey][1]
+    def getValue(self, key):
+        hashedKey = hash(key) % len(self._table)
+        if self._table[hashedKey] is not None:
+            return self._table[hashedKey][1]
         else:
             print("key not found")
 
     def delete(self, key):
-        hashedKey = hash(key) % len(self.table)
-        self.table[hashedKey] = [None]
+        hashedKey = hash(key) % len(self._table)
+        self._table[hashedKey] = [None]
