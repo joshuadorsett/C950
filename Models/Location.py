@@ -1,8 +1,21 @@
 class Location:
 
-    def __init__(self, title, address, city, zipCode, index):
+    def __init__(self, index, title, address, zipCode):
+        self._index = index
         self._title = title
         self._address = address
-        self._city = city
+        self._city = "Salt Lake City"
         self._zipCode = zipCode
-        self._index = index
+        self._listOfDistances = []
+
+    def setListOfDistances(self, list):
+        self._listOfDistances = list
+
+    def getIndex(self):
+        return self._index
+
+    def getTitle(self):
+        return self._title
+
+    def getDistance(self, locationBIndex):
+        return self._listOfDistances[locationBIndex]

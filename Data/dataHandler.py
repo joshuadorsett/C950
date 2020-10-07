@@ -1,24 +1,42 @@
 from DataStructures.HashTable import *
+from Models.Location import *
 from Models.Package import *
 
-def processData():
-    distanceLists = importDistances()
-    locationLists = importLocations()
-    packageLists = importPackages()
 
-    distances = HashTable(len(distanceLists))
-    locations = HashTable(len(locationLists))
+# returns a hash table of package objects
+def makeHashTableOfPackages():
+    packageLists = readPackages()
     packages = HashTable(len(packageLists))
-
     for i in range(len(packageLists)):
-            current = packageLists[i]
-            p = Package(current[0], current[1], current[2], current[4], current[5], current[6], current[7])
-            packages.insert(current[0], p)
+        current = packageLists[i]
+        p = Package(current[0], current[1], current[2], current[4], current[5], current[6], current[7])
+        packages.insert(current[0], p)
+    return packages
 
 
+# returns a hash table of location objects
+def makeHashTableOfLocations():
+    locationLists = readLocations()
+    locations = HashTable(len(locationLists))
+    for i in range(len(locationLists)):
+        current = locationLists[i]
+        l = Location(current[0], current[1], current[2], current[3])
+        locations.insert(l.getIndex(), l)
+    return locations
 
 
-def importDistances():
+# returns a hash table with the key being LocationA and the key is a list of distances to any LocationB
+# by using the getIndex method in the Location class we can access any distance once this list is created
+def makeHashTableOfDistances():
+    distanceLists = readDistances()
+    distances = HashTable(len(distanceLists))
+    for LocationAIndex in range(len(distanceLists)):
+        ListOfDistancesFromLocationA = distanceLists[LocationAIndex]
+        distances.insert(LocationAIndex, ListOfDistancesFromLocationA)
+    return distances
+
+
+def readDistances():
     distanceFile = open('Data/distances.txt')
     try:
         strings = distanceFile.readlines()
@@ -32,7 +50,8 @@ def importDistances():
             distances[i][j] = float(distances[i][j])
     return distances
 
-def importLocations():
+
+def readLocations():
     locationFile = open('Data/locations.txt')
     try:
         strings = locationFile.readlines()
@@ -47,7 +66,8 @@ def importLocations():
             locations[i][3] = int(locations[i][3])
     return locations
 
-def importPackages():
+
+def readPackages():
     packageFile = open('Data/packages.txt')
     try:
         strings = packageFile.readlines()

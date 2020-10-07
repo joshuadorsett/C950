@@ -14,9 +14,9 @@ class Truck:
     def getPackages(self):
         return self._packages
 
-    def addCargo(self, packageId, package):
+    def addCargo(self, package):
         if self._cargoSize < self._maxCargo:
-            self._packages.insert(packageId, package)
+            self._packages.insert(package.getId(), package)
             self._cargoSize += 1
         else:
             print("cargo is full.")
