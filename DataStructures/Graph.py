@@ -1,6 +1,3 @@
-from DataStructures.HashTable import *
-
-
 class Graph:
     def __init__(self, locations):
         # takes a hash table of locations with the key being index and the value being the location object

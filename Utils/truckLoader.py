@@ -1,0 +1,52 @@
+from Models.Truck import Truck
+
+
+def truckLoader(packages):
+    truck1 = Truck(1)
+    truck2 = Truck(2)
+    truck3 = Truck(3)
+
+    truck1.addCargo(packages.getValue(0))
+    truck1.addCargo(packages.getValue(1))
+    truck1.addCargo(packages.getValue(2))
+    truck1.addCargo(packages.getValue(3))
+    truck1.addCargo(packages.getValue(4))
+    truck1.addCargo(packages.getValue(5))
+    truck1.addCargo(packages.getValue(6))
+    truck1.addCargo(packages.getValue(7))
+    truck1.addCargo(packages.getValue(8))
+    truck1.addCargo(packages.getValue(9))
+    truck1.addCargo(packages.getValue(10))
+    truck1.addCargo(packages.getValue(11))
+    truck1.addCargo(packages.getValue(12))
+    truck1.addCargo(packages.getValue(13))
+    truck1.addCargo(packages.getValue(14))
+    truck1.addCargo(packages.getValue(15))
+    truck2.addCargo(packages.getValue(16))
+    truck2.addCargo(packages.getValue(17))
+    truck2.addCargo(packages.getValue(18))
+    truck2.addCargo(packages.getValue(19))
+    truck2.addCargo(packages.getValue(20))
+    truck2.addCargo(packages.getValue(21))
+    truck2.addCargo(packages.getValue(22))
+    truck2.addCargo(packages.getValue(23))
+    truck2.addCargo(packages.getValue(24))
+    truck2.addCargo(packages.getValue(25))
+    truck2.addCargo(packages.getValue(26))
+    truck2.addCargo(packages.getValue(27))
+    truck2.addCargo(packages.getValue(28))
+    truck2.addCargo(packages.getValue(29))
+    truck2.addCargo(packages.getValue(30))
+    truck2.addCargo(packages.getValue(31))
+    truck3.addCargo(packages.getValue(32))
+    truck3.addCargo(packages.getValue(33))
+    truck3.addCargo(packages.getValue(34))
+    truck3.addCargo(packages.getValue(35))
+    truck3.addCargo(packages.getValue(36))
+    truck3.addCargo(packages.getValue(37))
+    truck3.addCargo(packages.getValue(38))
+    truck3.addCargo(packages.getValue(39))
+
+    trucks = [truck1, truck2, truck3]
+
+    return trucks

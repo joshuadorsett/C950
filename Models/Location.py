@@ -7,9 +7,19 @@ class Location:
         self._city = "Salt Lake City"
         self._zipCode = zipCode
         self._listOfDistances = []
+        self._packages = []
 
     def setListOfDistances(self, list):
         self._listOfDistances = list
+
+    def dropOffPackage(self, package):
+        self._packages.append(package)
+
+    def getPackages(self):
+        return self._packages
+
+    def getAddress(self):
+        return self._address
 
     def getIndex(self):
         return self._index

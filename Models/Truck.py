@@ -14,12 +14,15 @@ class Truck:
     def getPackages(self):
         return self._packages
 
+    def getMaxCargo(self):
+        return self._maxCargo
+
     def addCargo(self, package):
         if self._cargoSize < self._maxCargo:
             self._packages.insert(package.getId(), package)
             self._cargoSize += 1
         else:
-            print("cargo is full.")
+            print("cargo is full. :", self.getId())
 
     def removeCargo(self, packageId):
         self._packages.delete(packageId)

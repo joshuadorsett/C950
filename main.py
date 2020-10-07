@@ -1,6 +1,6 @@
 from DataStructures.Graph import *
-from Data.dataHandler import *
-from Models.Truck import Truck
+from Utils.dataHandler import *
+from Utils.truckLoader import truckLoader
 
 if __name__ == "__main__":
     # make 3 hash tables of locations, distances and packages
@@ -9,25 +9,25 @@ if __name__ == "__main__":
     packages = makeHashTableOfPackages()
 
     # distance lists added to each location
+    # each location is responsible for its own distances to all other locations
     for i in range(len(distances.getValue(0))):
         location = locations.getValue(i)
         distancesList = distances.getValue(i)
         location.setListOfDistances(distancesList)
 
     # build a graph of locations
-    # each location is responsible for its own list of distances
-    map = Graph(locations)
+    saltLakeCity = Graph(locations)
 
-    #create truck objects
-    truck1 = Truck(1)
-    truck2 = Truck(2)
+    # setting the graph index of each package
+    for i in range(locations.getSize()):
+        packages.getValue(i).setGraphIndex(locations)
 
-    #load trucks
-    for i in range(16):
-        package = packages.getValue(i)
-        truck1.addCargo(package)
-        package2 = packages.getValue(i+16)
-        truck2.addCargo(package2)
+    # create and load trucks
+    # returns a list of all trucks
+    trucks = truckLoader(packages)
+    truck1 = trucks[0]
+    truck2 = trucks[1]
+    truck3 = trucks[2]
 
-    p = truck1.getPackages().getValue(15)
-    print(p._address)
+    p = truck2.getPackages().getValue(16)
+    print(p.getId())

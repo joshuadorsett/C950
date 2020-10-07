@@ -7,10 +7,18 @@ class Package:
         self._deadline = deadline
         self._weight = weight
         self._specialNote = specialNote
+        self._graphIndex = None
         self._deliveryStatus = None
 
     def setDeliveryStatus(self, status):
         self._deliveryStatus = status
+
+    def setGraphIndex(self, locations):
+        for i in range(40):
+            if locations.getValue(i).getAddress() == self._address:
+                self._graphIndex = locations.getValue(i).getIndex()
+            else:
+                print("address not found in locations")
 
     def getId(self):
         return self._packageId
