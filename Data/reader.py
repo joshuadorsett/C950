@@ -12,7 +12,7 @@ def processData():
 
     for i in range(len(packageLists)):
             current = packageLists[i]
-            p = Package(current[0], current[1], current[2], current[4], current[5], current[6], current[7], None)
+            p = Package(current[0], current[1], current[2], current[4], current[5], current[6], current[7])
             packages.insert(current[0], p)
 
 
