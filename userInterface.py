@@ -104,5 +104,26 @@ def userInterface(running):
             print("The total miles for all routes is", totalMiles)
             print("------------------------------------\n")
 
+        elif inputStream == 'a':
+
+            time = input("enter a time to lookup in the format 'hh:mm'."
+                         "\nplease use 24 hour time.\n")
+
+            for i in range(40):
+                package = packages.getValue(i)
+                truck = package.getTruck()
+                route = truck.getRoute()
+                timeTruckLeftHub = truck.getTimeLeftHub()
+                routeListVisited = getRouteListVisited(timeTruckLeftHub, time, route)
+                numberOfLocationsVisited = len(routeListVisited)
+                packagesDelivered = []
+                for p in truck.getPackages():
+                    for i in range(numberOfLocationsVisited):
+                        if p.getAddress() == routeListVisited[i][0].getAddress():
+                            p.setDeliveryStatus("delivered at " + routeListVisited[i][1])
+                            packagesDelivered.append(p)
+                            break
+                package.print()
+
         elif inputStream == 'e':
             running = False

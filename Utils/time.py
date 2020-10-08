@@ -46,10 +46,6 @@ def getRouteListVisited(startTime, currentTime, route):
             currentLocation = nextLocation
             locationsVisited.append(nextLocation)
         elif miles == currentCost:
-            print("truck is currently at ", currentLocation.getTitle(),
-                  "\nmiles this truck has driven: ", currentCost)
             return locationsVisited
         else:
-            print("truck is currently on the way to ", currentLocation[0].getTitle(),
-                  "\nmiles this truck has driven: ", currentCost)
             return locationsVisited

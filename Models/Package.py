@@ -7,7 +7,7 @@ class Package:
         self._deadline = deadline
         self._weight = weight
         self._specialNote = specialNote
-        self._deliveryStatus = "not delivered"
+        self._deliveryStatus = "not delivered\n"
         self._truck = None
 
     def setDeliveryStatus(self, status):
@@ -34,8 +34,9 @@ class Package:
             "\nDeadline: " + self._deadline + \
             "\nWeight: " + str(self._weight) + \
             "\nSpecial Note: " + self._specialNote + \
-            "\nAssigned to Truck: " + str(self._truck.getId()) +\
-            "\nDelivery Status: " + self._deliveryStatus
+            "Assigned to Truck: " + str(self._truck.getId()) +\
+            "\nDelivery Status: " + self._deliveryStatus + \
+            "\n-------------------------"
         print(printStream)
 
 
