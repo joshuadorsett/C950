@@ -3,7 +3,6 @@ class HashTable:
         self._table = []
         for i in range(startingCapacity):
             self._table.append([None])
-        self._size = 0
 
     def insert(self, key, value):
         hashedKey = hash(key) % len(self._table)
@@ -23,7 +22,12 @@ class HashTable:
             print("key not found")
 
     def getSize(self):
-        return self._size
+        size = 0
+        for i in range(len(self._table)):
+            if self._table[i] != None:
+                size += 1
+        return size
+
 
     def delete(self, key):
         hashedKey = hash(key) % len(self._table)
