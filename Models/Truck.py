@@ -1,25 +1,39 @@
+from Utils.time import time
+
 def routeMiles(route, graph):
-    finalDestination = None
+    previousDestination = None
     miles = 0.0
     for destination in route:
-        if finalDestination is None:
-            finalDestination = destination
+        if previousDestination is None:
+            previousDestination = destination
             continue
-        miles = round(miles + graph.getDistance(finalDestination.getIndex(), destination.getIndex()))
-        finalDestination = destination
+        miles = round(miles + graph.getDistance(previousDestination[0].getIndex(), destination[0].getIndex()))
+        previousDestination = destination
     return miles
 
 
 class Truck:
-    def __init__(self, truckId):
+    def __init__(self, truckId, timeLeftHub):
         self._truckId = truckId
         self._maxCargo = 16
-        self._speed = 18
         self._cargoSize = 0
         self._packages = []
         self._route = []
         self._miles = 0.0
-        self._time = None
+        self._timeLeftHub = timeLeftHub
+        self._clock = timeLeftHub
+
+    def getId(self):
+        return self._truckId
+
+    def getTimeLeftHub(self):
+        return  self._timeLeftHub
+
+    def getRoute(self):
+        return self._route
+
+    def getPackages(self):
+        return self._packages
 
     def addCargo(self, package):
         if self._cargoSize < self._maxCargo:
@@ -35,7 +49,8 @@ class Truck:
             for j in range(len(self._packages)):
                 if locations.getValue(i).getAddress() == self._packages[j]._address:
                     destinations.append(locations.getValue(i))
-        route = [Hub]
+        distanceFromStart = 0
+        route = [[Hub, self._timeLeftHub]]
         currentLocation = Hub
         while len(destinations) > 0:
             closestLocation = Hub
@@ -49,9 +64,10 @@ class Truck:
                     closestLocation = destinations[i]
                     closestLocationIndex = i
                     shortestDistance = distance
-            route.append(destinations.pop(closestLocationIndex))
+                    distanceFromStart += distance
+            route.append([destinations.pop(closestLocationIndex), time(self._timeLeftHub, distanceFromStart)])
             currentLocation = closestLocation
-        route.append(Hub)
+        route.append([Hub, time(self._timeLeftHub, distanceFromStart)])
         self._route = route
         return route
 

@@ -2,56 +2,40 @@ from Models.Truck import Truck
 
 
 def truckLoader(packages):
-    highPriorityTruck = Truck(1)
-
     # trucks loaded manually based on priority and special notes
-    highPriorityTruck.addCargo(packages.getValue(14))
-    highPriorityTruck.addCargo(packages.getValue(13))
-    highPriorityTruck.addCargo(packages.getValue(15))
-    highPriorityTruck.addCargo(packages.getValue(19))
-    highPriorityTruck.addCargo(packages.getValue(0))
-    highPriorityTruck.addCargo(packages.getValue(3))
-    highPriorityTruck.addCargo(packages.getValue(6))
-    highPriorityTruck.addCargo(packages.getValue(8))
-    highPriorityTruck.addCargo(packages.getValue(10))
-    highPriorityTruck.addCargo(packages.getValue(16))
-    highPriorityTruck.addCargo(packages.getValue(20))
-    highPriorityTruck.addCargo(packages.getValue(23))
-    highPriorityTruck.addCargo(packages.getValue(25))
-    highPriorityTruck.addCargo(packages.getValue(28))
-    highPriorityTruck.addCargo(packages.getValue(29))
 
-    mediumPriorityTruck = Truck(2)
+    truckOne = Truck(1, '8:30')
+    truckOneCargo = [packages.getValue(14), packages.getValue(13), packages.getValue(15),
+                     packages.getValue(19), packages.getValue(0), packages.getValue(3),
+                     packages.getValue(6), packages.getValue(8), packages.getValue(10),
+                     packages.getValue(16), packages.getValue(20), packages.getValue(23),
+                     packages.getValue(25), packages.getValue(28), packages.getValue(29)]
+    for i in range(len(truckOneCargo)):
+        package = truckOneCargo[i]
+        truckOne.addCargo(package)
+        package.setTruck(truckOne)
 
-    mediumPriorityTruck.addCargo(packages.getValue(37))
-    mediumPriorityTruck.addCargo(packages.getValue(35))
-    mediumPriorityTruck.addCargo(packages.getValue(17))
-    mediumPriorityTruck.addCargo(packages.getValue(2))
-    mediumPriorityTruck.addCargo(packages.getValue(1))
-    mediumPriorityTruck.addCargo(packages.getValue(4))
-    mediumPriorityTruck.addCargo(packages.getValue(7))
-    mediumPriorityTruck.addCargo(packages.getValue(9))
-    mediumPriorityTruck.addCargo(packages.getValue(11))
-    mediumPriorityTruck.addCargo(packages.getValue(12))
-    mediumPriorityTruck.addCargo(packages.getValue(18))
-    mediumPriorityTruck.addCargo(packages.getValue(21))
-    mediumPriorityTruck.addCargo(packages.getValue(22))
-    mediumPriorityTruck.addCargo(packages.getValue(26))
-    mediumPriorityTruck.addCargo(packages.getValue(30))
+    truckTwo = Truck(2, '8:30')
+    truckTwoCargo = [packages.getValue(37), packages.getValue(35), packages.getValue(17),
+                     packages.getValue(2), packages.getValue(1), packages.getValue(4),
+                     packages.getValue(7), packages.getValue(9), packages.getValue(11),
+                     packages.getValue(12), packages.getValue(18), packages.getValue(21),
+                     packages.getValue(22), packages.getValue(26), packages.getValue(30)]
+    for i in range(len(truckTwoCargo)):
+        package = truckTwoCargo[i]
+        truckTwo.addCargo(package)
+        package.setTruck(truckTwo)
 
-    lowPriorityTruck = Truck(3)
+    truckThree = Truck(3, '9:05')
+    truckThreeCargo = [packages.getValue(31), packages.getValue(27), packages.getValue(24),
+                       packages.getValue(5), packages.getValue(32), packages.getValue(33),
+                       packages.getValue(34), packages.getValue(36), packages.getValue(38),
+                       packages.getValue(39)]
+    for i in range(len(truckThreeCargo)):
+        package = truckThreeCargo[i]
+        truckThree.addCargo(package)
+        package.setTruck(truckThree)
 
-    lowPriorityTruck.addCargo(packages.getValue(31))
-    lowPriorityTruck.addCargo(packages.getValue(27))
-    lowPriorityTruck.addCargo(packages.getValue(24))
-    lowPriorityTruck.addCargo(packages.getValue(5))
-    lowPriorityTruck.addCargo(packages.getValue(32))
-    lowPriorityTruck.addCargo(packages.getValue(33))
-    lowPriorityTruck.addCargo(packages.getValue(34))
-    lowPriorityTruck.addCargo(packages.getValue(36))
-    lowPriorityTruck.addCargo(packages.getValue(38))
-    lowPriorityTruck.addCargo(packages.getValue(39))
-
-    trucks = [highPriorityTruck, mediumPriorityTruck, lowPriorityTruck]
+    trucks = [truckOne, truckTwo, truckThree]
 
     return trucks

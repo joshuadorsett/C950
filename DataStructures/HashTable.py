@@ -15,7 +15,7 @@ class HashTable:
             self._size += 1
 
     def getValue(self, key):
-        hashedKey = hash(key) % len(self._table)
+        hashedKey = int(key) % len(self._table)
         if self._table[hashedKey] is not None:
             return self._table[hashedKey][1]
         else:
