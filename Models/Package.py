@@ -16,6 +16,9 @@ class Package:
     def setTruck(self, truck):
         self._truck = truck
 
+    def setAddress(self, address):
+        self._address = address
+
     def getAddress(self):
         return self._address
 
