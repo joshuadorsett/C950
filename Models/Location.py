@@ -27,5 +27,5 @@ class Location:
     def getTitle(self):
         return self._title
 
-    def getDistance(self, locationB):
-        return self._listOfDistances[locationB[0].getIndex()]
+    # def getDistance(self, locationB):
+    #     return self._listOfDistances[locationB[0].getIndex()]

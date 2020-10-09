@@ -4,9 +4,6 @@ from Utils.dataHandler import *
 from Utils.truckLoader import truckLoader
 
 
-#  Provide an interface for the insert and look-up functions to view the status of any package at any time.
-#  This function should return all information about each package, including delivery status.
-
 def userInterface(running):
     print("------------------------------------")
     print("C950")
@@ -19,20 +16,16 @@ def userInterface(running):
     distances = makeHashTableOfDistances()
     packages = makeHashTableOfPackages()
 
-    # distance lists added to each location
-    # each location is responsible for its own distances to all other locations
-    for i in range(len(distances.getValue(0))):
-        location = locations.getValue(i)
-        distancesList = distances.getValue(i)
-        location.setListOfDistances(distancesList)
-
     # build a graph of locations
     saltLakeCity = Graph(locations, distances)
+
+    # assign and load trucks
     trucks = truckLoader(packages)
     truck1 = trucks[0]
     truck2 = trucks[1]
     truck3 = trucks[2]
 
+    # create routes and calculate cost of each route
     route1 = truck1.createRoute(saltLakeCity, locations.getValue(0), locations)
     routeMiles1 = routeMiles(route1, saltLakeCity)
     route2 = truck2.createRoute(saltLakeCity, locations.getValue(0), locations)
@@ -43,66 +36,41 @@ def userInterface(running):
 
     while running:
 
-        inputStream = input("enter 'r' to lookup routes.\n"
-                            "enter 'a' to print all package information for a certain time.\n"
-                            "enter 'p' to lookup a package at a certain time.\n"
+        inputStream = input("enter 'p' to print all package information for a certain time.\n"
+                            "enter 'r' to lookup routes.\n"
                             "enter 'e' to end program.\n")
-
-        # if inputStream == 'p':
-        #     packageIndex = input("type index of package\n")
-        #     package = None
-        #     if int(packageIndex) < 40:
-        #         package = packages.getValue(packageIndex)
-        #     else:
-        #         print("package not found, please enter number less than 40.")
-        #         packageIndex = input("type index of package\n")
-        #         package = packages.getValue(packageIndex)
-        #
-        #     time = input("enter a time to lookup in the format 'hh:mm'."
-        #                  "\nplease use 24 hour time.\n")
-        #
-        #     truck = package.getTruck()
-        #     route = truck.getRoute()
-        #     timeTruckLeftHub = truck.getTimeLeftHub()
-        #     routeListVisited = getRouteListVisited(timeTruckLeftHub, time, route)
-        #     numberOfLocationsVisited = len(routeListVisited)
-        #     packagesDelivered = []
-        #     for p in truck.getPackages():
-        #         for i in range(numberOfLocationsVisited):
-        #             if p.getAddress() == routeListVisited[i][0].getAddress():
-        #                 p.setDeliveryStatus("delivered at " + routeListVisited[i][1])
-        #                 packagesDelivered.append(p)
-        #                 break
-        #     package.print()
 
         if inputStream == 'r':
             inputStream = input("enter index of truck '0', '1', or '2'")
             if inputStream == '0':
                 print("=========Route for truck one===========")
-                print(routeMiles1, "miles\n")
                 for i in range(len(route1)):
                     print(route1[i][0].getTitle())
                 print("\n")
+                print(routeMiles1, "total miles in this route.\n")
+
             elif inputStream == '1':
                 print("=========Route for truck two===========")
-                print(routeMiles2, "miles\n")
                 for i in range(len(route2)):
                     print(route2[i][0].getTitle())
                 print("\n")
+                print(routeMiles2, "total miles in this route.\n")
+
             elif inputStream == '2':
                 print("========Route for truck three============")
-                print(routeMiles3, "miles\n")
                 for i in range(len(route3)):
                     print(route3[i][0].getTitle())
                 print("\n")
+                print(routeMiles3, "total miles in this route.\n")
+
 
             print("The total miles for all routes is", totalMiles)
             print("------------------------------------\n")
 
-        elif inputStream == 'a':
+        elif inputStream == 'p':
 
             currentTime = input("enter a time to lookup in the format 'hh:mm'."
-                         "\nplease use 24 hour time.\n")
+                                "\nplease use 24 hour time.\n")
 
             truck1.startRoute(currentTime)
             truck2.startRoute(currentTime)
