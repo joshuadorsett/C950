@@ -22,6 +22,9 @@ class Package:
     def getId(self):
         return self._packageId
 
+    def getDeadline(self):
+        return self._deadline
+
     # print method that prints out all information for a specific package object
     def print(self):
         printStream = "ID: " + str(self._packageId) + \

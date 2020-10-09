@@ -39,19 +39,19 @@ def userInterface(running):
             if inputStream == '0':
                 print("=========Route for truck one===========")
                 for i in range(len(route1)):
-                    print(route1[i][0].getTitle())
+                    print(route1[i][0].getAddress())
                 print("\n")
                 print(routeMiles1, "total miles in this route.\n")
             elif inputStream == '1':
                 print("=========Route for truck two===========")
                 for i in range(len(route2)):
-                    print(route2[i][0].getTitle())
+                    print(route2[i][0].getAddress())
                 print("\n")
                 print(routeMiles2, "total miles in this route.\n")
             elif inputStream == '2':
                 print("========Route for truck three============")
                 for i in range(len(route3)):
-                    print(route3[i][0].getTitle())
+                    print(route3[i][0].getAddress())
                 print("\n")
                 print(routeMiles3, "total miles in this route.\n")
             print("The total miles for all routes is", totalMiles)
@@ -60,10 +60,19 @@ def userInterface(running):
         elif inputStream == 'p':
             currentTime = input("enter a time to lookup in the format 'hh:mm'."
                                 "\nplease use 24 hour time.\n")
-            for truck in trucks:
-                truck.startRoute(currentTime)
-                for p in truck.getPackages():
-                    p.print()
+            inputStream = input("enter 'a' for all packages.\n"
+                                "enter 'i' for a specific package")
+            if inputStream == 'a':
+                for truck in trucks:
+                    truck.startRoute(currentTime)
+                    for p in truck.getPackages():
+                        p.print()
+            elif inputStream == 'i':
+                index = input("enter integer from 0-39 of package index")
+                for truck in trucks:
+                    for p in truck.getPackages():
+                        if p.getId == int(index):
+                            p.print()
 
         elif inputStream == 'e':
             running = False
