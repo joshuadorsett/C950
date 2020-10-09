@@ -1,4 +1,4 @@
-from Utils.time import time
+from Utils.time import *
 
 def routeMiles(route, graph):
     previousDestination = None
@@ -42,6 +42,28 @@ class Truck:
         else:
             print("cargo is full. :", self._truckId)
 
+    def startRoute(self, currentTime):
+        # reset delivery status from last time user called this function during UI while loop
+        for p in self._packages:
+            p.setDeliveryStatus("not delivered\n")
+
+        # set the starting time to total minutes from midnight
+        startTimeMinutes = timestampToMinutes(self._timeLeftHub)
+        # convert current time to minutes from midnight
+        # then subtract startTimeMinutes to find total minutes from time left hub
+        currentTimeMinutes = timestampToMinutes(currentTime) - startTimeMinutes
+
+        # loop through truck route and set condition to advance only for locations before current time
+        for i in range(len(self._route)):
+            deliveryLocation = self._route[i][0]
+            deliveryTime = self._route[i][1]
+            deliveryTimeMinutes = timestampToMinutes(deliveryTime) - startTimeMinutes
+            if currentTimeMinutes > deliveryTimeMinutes:
+                for p in self._packages:
+                    if p.getAddress() == deliveryLocation.getAddress():
+                        p.setDeliveryStatus("delivered to " +
+                                            deliveryLocation.getTitle() +
+                                            " at " + deliveryTime)
     # greedy algo
     def createRoute(self, graph, Hub, locations):
         destinations = []
@@ -65,11 +87,12 @@ class Truck:
                     closestLocationIndex = i
                     shortestDistance = distance
                     distanceFromStart += distance
-            route.append([destinations.pop(closestLocationIndex), time(self._timeLeftHub, distanceFromStart)])
+            route.append([destinations.pop(closestLocationIndex), milesToTime(self._timeLeftHub, distanceFromStart)])
             currentLocation = closestLocation
-        route.append([Hub, time(self._timeLeftHub, distanceFromStart)])
+        route.append([Hub, milesToTime(self._timeLeftHub, distanceFromStart)])
         self._route = route
         return route
+
 
 
 

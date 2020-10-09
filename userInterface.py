@@ -2,7 +2,6 @@ from DataStructures.Graph import Graph
 from Models.Truck import routeMiles
 from Utils.dataHandler import *
 from Utils.truckLoader import truckLoader
-from Utils.time import getRouteListVisited
 
 
 #  Provide an interface for the insert and look-up functions to view the status of any package at any time.
@@ -30,57 +29,53 @@ def userInterface(running):
     # build a graph of locations
     saltLakeCity = Graph(locations, distances)
     trucks = truckLoader(packages)
-    highPriorityTruck = trucks[0]
-    mediumPriorityTruck = trucks[1]
-    lowPriorityTruck = trucks[2]
+    truck1 = trucks[0]
+    truck2 = trucks[1]
+    truck3 = trucks[2]
 
-    route1 = highPriorityTruck.createRoute(saltLakeCity, locations.getValue(0), locations)
+    route1 = truck1.createRoute(saltLakeCity, locations.getValue(0), locations)
     routeMiles1 = routeMiles(route1, saltLakeCity)
-    route2 = mediumPriorityTruck.createRoute(saltLakeCity, locations.getValue(0), locations)
+    route2 = truck2.createRoute(saltLakeCity, locations.getValue(0), locations)
     routeMiles2 = routeMiles(route2, saltLakeCity)
-    route3 = lowPriorityTruck.createRoute(saltLakeCity, locations.getValue(0), locations)
+    route3 = truck3.createRoute(saltLakeCity, locations.getValue(0), locations)
     routeMiles3 = routeMiles(route3, saltLakeCity)
     totalMiles = routeMiles1 + routeMiles2 + routeMiles3
 
     while running:
 
-        inputStream = input("enter 'p' to lookup a package at a certain time.\n"
-                            "enter 'r' to lookup routes.\n"
+        inputStream = input("enter 'r' to lookup routes.\n"
                             "enter 'a' to print all package information for a certain time.\n"
+                            "enter 'p' to lookup a package at a certain time.\n"
                             "enter 'e' to end program.\n")
 
-        # if inputStream == 'package':
-        #     inputStream = input("type index of package\n")
-        #     packages.getValue(inputStream).print()
-        #     print("------------------------------------\n")
-        if inputStream == 'p':
-            packageIndex = input("type index of package\n")
-            package = None
-            if int(packageIndex) < 40:
-                package = packages.getValue(packageIndex)
-            else:
-                print("package not found, please enter number less than 40.")
-                packageIndex = input("type index of package\n")
-                package = packages.getValue(packageIndex)
+        # if inputStream == 'p':
+        #     packageIndex = input("type index of package\n")
+        #     package = None
+        #     if int(packageIndex) < 40:
+        #         package = packages.getValue(packageIndex)
+        #     else:
+        #         print("package not found, please enter number less than 40.")
+        #         packageIndex = input("type index of package\n")
+        #         package = packages.getValue(packageIndex)
+        #
+        #     time = input("enter a time to lookup in the format 'hh:mm'."
+        #                  "\nplease use 24 hour time.\n")
+        #
+        #     truck = package.getTruck()
+        #     route = truck.getRoute()
+        #     timeTruckLeftHub = truck.getTimeLeftHub()
+        #     routeListVisited = getRouteListVisited(timeTruckLeftHub, time, route)
+        #     numberOfLocationsVisited = len(routeListVisited)
+        #     packagesDelivered = []
+        #     for p in truck.getPackages():
+        #         for i in range(numberOfLocationsVisited):
+        #             if p.getAddress() == routeListVisited[i][0].getAddress():
+        #                 p.setDeliveryStatus("delivered at " + routeListVisited[i][1])
+        #                 packagesDelivered.append(p)
+        #                 break
+        #     package.print()
 
-            time = input("enter a time to lookup in the format 'hh:mm'."
-                         "\nplease use 24 hour time.\n")
-
-            truck = package.getTruck()
-            route = truck.getRoute()
-            timeTruckLeftHub = truck.getTimeLeftHub()
-            routeListVisited = getRouteListVisited(timeTruckLeftHub, time, route)
-            numberOfLocationsVisited = len(routeListVisited)
-            packagesDelivered = []
-            for p in truck.getPackages():
-                for i in range(numberOfLocationsVisited):
-                    if p.getAddress() == routeListVisited[i][0].getAddress():
-                        p.setDeliveryStatus("delivered at " + routeListVisited[i][1])
-                        packagesDelivered.append(p)
-                        break
-            package.print()
-
-        elif inputStream == 'r':
+        if inputStream == 'r':
             inputStream = input("enter index of truck '0', '1', or '2'")
             if inputStream == '0':
                 print("=========Route for truck one===========")
@@ -106,24 +101,15 @@ def userInterface(running):
 
         elif inputStream == 'a':
 
-            time = input("enter a time to lookup in the format 'hh:mm'."
+            currentTime = input("enter a time to lookup in the format 'hh:mm'."
                          "\nplease use 24 hour time.\n")
 
-            for i in range(40):
-                package = packages.getValue(i)
-                truck = package.getTruck()
-                route = truck.getRoute()
-                timeTruckLeftHub = truck.getTimeLeftHub()
-                routeListVisited = getRouteListVisited(timeTruckLeftHub, time, route)
-                numberOfLocationsVisited = len(routeListVisited)
-                packagesDelivered = []
+            truck1.startRoute(currentTime)
+            truck2.startRoute(currentTime)
+            truck3.startRoute(currentTime)
+            for truck in trucks:
                 for p in truck.getPackages():
-                    for i in range(numberOfLocationsVisited):
-                        if p.getAddress() == routeListVisited[i][0].getAddress():
-                            p.setDeliveryStatus("delivered at " + routeListVisited[i][1])
-                            packagesDelivered.append(p)
-                            break
-                package.print()
+                    p.print()
 
         elif inputStream == 'e':
             running = False

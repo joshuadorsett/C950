@@ -1,4 +1,7 @@
+
+
 # converts 24 hour hh:mm to total minutes from midnight
+# returns an int
 def timestampToMinutes(time24):
     timeString = str(time24).split(':')
     hourToMinutes = int(timeString[0]) * 60
@@ -7,6 +10,7 @@ def timestampToMinutes(time24):
 
 
 # converts total minutes from midnight to 24 hour hh:mm
+# returns a string
 def minutesToTimestamp(minutesFromMidnight):
     # finds the number of hours have passed from midnight and rounds down
     hour = str(int(minutesFromMidnight / 60))
@@ -20,32 +24,9 @@ def minutesToTimestamp(minutesFromMidnight):
 
 
 # this returns the time after a certain amount of miles
-def time(startTime, distanceFromStart):
+def milesToTime(startTime, distanceFromStart):
     totalStartingMinutes = timestampToMinutes(startTime)
     minutesFromStart = distanceFromStart / 0.3
     minutesFromMidnight = totalStartingMinutes + minutesFromStart
     return minutesToTimestamp(minutesFromMidnight)
 
-
-def getRouteListVisited(startTime, currentTime, route):
-    # convert hour to 60 minutes and add total starting minutes from midnight
-    totalStartingMinutes = timestampToMinutes(startTime)
-    # convert hour to 60 minutes and add total current minutes from midnight
-    totalCurrentMinutes = timestampToMinutes(currentTime)
-    # subtract starting minutes from current minutes
-    minutesSinceStart = totalCurrentMinutes - totalStartingMinutes
-    # calculate the amount of miles driven at this point
-    currentCost = minutesSinceStart * (18 / 60)
-    # calculate current location based on miles driven and the route list of location objects
-    miles = 0
-    currentLocation = route[0]
-    locationsVisited = []
-    for nextLocation in route:
-        if miles < currentCost:
-            miles += currentLocation[0].getDistance(nextLocation)
-            currentLocation = nextLocation
-            locationsVisited.append(nextLocation)
-        elif miles == currentCost:
-            return locationsVisited
-        else:
-            return locationsVisited
