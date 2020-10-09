@@ -48,6 +48,7 @@ class Truck:
         for p in self._packages:
             p.setDeliveryStatus("not delivered\n")
 
+# need to somehow make sure this only changes address after 10:20 and delivers after 10:20
         if self._truckId == 3:
             routesLastLocation = self.getRoute()[len(self.getRoute()) - 1][0]
             package = None

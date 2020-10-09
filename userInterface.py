@@ -1,7 +1,6 @@
 from DataStructures.Graph import Graph
 from Models.Truck import routeMiles
 from Utils.dataHandler import *
-from Utils.timeHandler import timestampToMinutes
 from Utils.truckLoader import truckLoader
 
 
