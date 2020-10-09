@@ -62,12 +62,19 @@ def userInterface(running):
             print("------------------------------------\n")
 
         elif inputStream == 'p':
-            currentTime = input("enter a time to lookup in the format 'hh:mm'."
+            currentTime = input("enter a time to lookup in the format 'hh:mm' or enter 'eod' for end of day."
                                 "\nplease use 24 hour time.\n")
-            for truck in trucks:
-                truck.startRoute(currentTime, saltLakeCity, locations)
-                for p in truck.getPackages():
-                    p.print()
+            if currentTime != 'eod':
+                for truck in trucks:
+                    truck.startRoute(currentTime, saltLakeCity, locations)
+                    for p in truck.getPackages():
+                        p.print()
+            elif currentTime == 'eod':
+                for truck in trucks:
+                    truck.startRoute('24:00', saltLakeCity, locations)
+                    for p in truck.getPackages():
+                        p.print()
             running = False
+
         elif inputStream == 'e':
             running = False
