@@ -12,7 +12,6 @@ class HashTable:
         # if index is not found in table
         else:
             self._table[hashedKey].append([key, value])
-            self._size += 1
 
     def getValue(self, key):
         hashedKey = int(key) % len(self._table)
@@ -24,12 +23,10 @@ class HashTable:
     def getSize(self):
         size = 0
         for i in range(len(self._table)):
-            if self._table[i] != None:
+            if self._table[i] is not None:
                 size += 1
         return size
-
 
     def delete(self, key):
         hashedKey = hash(key) % len(self._table)
         self._table[hashedKey] = [None]
-        self._size -= 1

@@ -1,4 +1,5 @@
-from Utils.time import *
+from Utils.timeHandler import *
+
 
 def routeMiles(route, graph):
     previousDestination = None
@@ -27,7 +28,7 @@ class Truck:
         return self._truckId
 
     def getTimeLeftHub(self):
-        return  self._timeLeftHub
+        return self._timeLeftHub
 
     def getRoute(self):
         return self._route
@@ -64,12 +65,13 @@ class Truck:
                         p.setDeliveryStatus("delivered to " +
                                             deliveryLocation.getTitle() +
                                             " at " + deliveryTime)
-    # greedy algo
+
+    # greedy algo customized to to route eraly morning deadlines first
     def createRoute(self, graph, Hub, locations):
         destinations = []
         for i in range(locations.getSize()):
             for j in range(len(self._packages)):
-                if locations.getValue(i).getAddress() == self._packages[j]._address:
+                if locations.getValue(i).getAddress() == self._packages[j].getAddress():
                     destinations.append(locations.getValue(i))
         distanceFromStart = 0
         route = [[Hub, self._timeLeftHub]]
@@ -92,7 +94,3 @@ class Truck:
         route.append([Hub, milesToTime(self._timeLeftHub, distanceFromStart)])
         self._route = route
         return route
-
-
-
-

@@ -6,14 +6,7 @@ class Location:
         self._address = address
         self._city = "Salt Lake City"
         self._zipCode = zipCode
-        self._listOfDistances = []
         self._packages = []
-
-    def setListOfDistances(self, list):
-        self._listOfDistances = list
-
-    def dropOffPackage(self, package):
-        self._packages.append(package)
 
     def getPackages(self):
         return self._packages
@@ -26,6 +19,3 @@ class Location:
 
     def getTitle(self):
         return self._title
-
-    # def getDistance(self, locationB):
-    #     return self._listOfDistances[locationB[0].getIndex()]
