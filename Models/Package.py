@@ -29,6 +29,18 @@ class Package:
     def getDeadline(self):
         return self._deadline
 
+    def getCity(self):
+        return self._city
+
+    def getZipCode(self):
+        return self._zipCode
+
+    def getWeight(self):
+        return self._weight
+
+    def getDeliveryStatus(self):
+        return self._deliveryStatus
+
     # this will be set to true unless a package has a note about wrong address information like package 8
     def valid(self):
         return self._validInfo

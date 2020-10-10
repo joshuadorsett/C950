@@ -1,3 +1,4 @@
+from DataStructures.HashTable import HashTable
 from Utils.timeHandler import *
 
 
@@ -59,6 +60,9 @@ class Truck:
                 routesLastLocationList = self.getRoute()[len(self.getRoute()) - 1]
                 address = '410 S State St'
                 p._address = address
+                p._zipCode = 84111
+                city = 'Salt Lake City'
+                p._city = city
                 p.setValidity(True)
                 self.appendRoute(graph, routesLastLocationList, p)
 
