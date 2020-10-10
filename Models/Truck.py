@@ -1,4 +1,3 @@
-from DataStructures.HashTable import HashTable
 from Utils.timeHandler import *
 
 
@@ -94,31 +93,22 @@ class Truck:
 
     # greedy algo customized to to route eraly morning deadlines first
     def createRoute(self, graph, Hub):
-        locations = graph.getLocations()
-        # create a list of locations that need to be visited before 10:30
+        locations = graph.getLocations()        # create a list of locations that need to be visited before 10:30
         amDestinations = []
         # create a list of locations that need to be visited by EOD
         eodDestinations = []
         # if deadline is not EOD add location to amDestinations and if it EOD add it to eodDestinations
         for i in range(locations.getSize()):
             for j in range(len(self._packages)):
-                repeat = False
+                # repeat = False
                 package = self._packages[j]
                 deadline = package.getDeadline()
-                # this code changes the address for package 8
-                for l in amDestinations:
-                    if package.getAddress() == l.getAddress():
-                        repeat = True
-                for l in eodDestinations:
-                    if package.getAddress() == l.getAddress():
-                        repeat = True
-                if not repeat:
-                    if deadline != 'EOD' or package.getId() == 25:
-                        if locations.getValue(i).getAddress() == package.getAddress():
-                            amDestinations.append(locations.getValue(i))
-                    else:
-                        if locations.getValue(i).getAddress() == package.getAddress():
-                            eodDestinations.append(locations.getValue(i))
+                if deadline != 'EOD':
+                    if locations.getValue(i).getAddress() == package.getAddress():
+                        amDestinations.append(locations.getValue(i))
+                else:
+                    if locations.getValue(i).getAddress() == package.getAddress():
+                        eodDestinations.append(locations.getValue(i))
 
         # total distance from start point
         distanceFromStart = 0
@@ -126,6 +116,9 @@ class Truck:
         route = [[Hub, self._timeLeftHub]]
         # location the algorithm is currently calculating from
         currentLocation = Hub
+        # bool used to remove repeated addresses in the route
+        repeatAddress = False
+
 
         # greedy algo for morning destinations
         while len(amDestinations) > 0:
@@ -141,8 +134,15 @@ class Truck:
                     closestLocationIndex = i
                     shortestDistance = distance
                     distanceFromStart += distance
-            route.append([amDestinations.pop(closestLocationIndex), milesToTime(self._timeLeftHub, distanceFromStart)])
-            currentLocation = closestLocation
+            for loc in route:
+                if amDestinations[closestLocationIndex].getIndex() == loc[0].getIndex():
+                    repeatAddress = True
+                    amDestinations.pop(closestLocationIndex)
+                    break
+            if not repeatAddress:
+                route.append([amDestinations.pop(closestLocationIndex), milesToTime(self._timeLeftHub, distanceFromStart)])
+                currentLocation = closestLocation
+            repeatAddress = False
 
         # greedy algo for eod destinations
         while len(eodDestinations) > 0:
@@ -158,8 +158,15 @@ class Truck:
                     closestLocationIndex = i
                     shortestDistance = distance
                     distanceFromStart += distance
-            route.append([eodDestinations.pop(closestLocationIndex), milesToTime(self._timeLeftHub, distanceFromStart)])
-            currentLocation = closestLocation
+            for loc in route:
+                if eodDestinations[closestLocationIndex].getIndex() == loc[0].getIndex():
+                    repeatAddress = True
+                    eodDestinations.pop(closestLocationIndex)
+                    break
+            if not repeatAddress:
+                route.append([eodDestinations.pop(closestLocationIndex), milesToTime(self._timeLeftHub, distanceFromStart)])
+                currentLocation = closestLocation
+            repeatAddress = False
 
         self._route = route
         return route

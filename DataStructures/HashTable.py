@@ -5,7 +5,7 @@ class HashTable:
             self._table.append([None])
 
     def insert(self, key, value):
-        hashedKey = int(key) % len(self._table)
+        hashedKey = hash(key) % len(self._table)
         # if index is found in table
         if self._table[hashedKey] is not None:
             self._table[hashedKey] = [key, value]
@@ -14,7 +14,7 @@ class HashTable:
             self._table[hashedKey].append([key, value])
 
     def getValue(self, key):
-        hashedKey = int(key) % len(self._table)
+        hashedKey = hash(key) % len(self._table)
         if self._table[hashedKey] is not None:
             return self._table[hashedKey][1]
         else:

@@ -59,7 +59,7 @@ class Package:
             "\nSpecial Note: " + self._specialNote + \
             "Assigned to Truck: " + str(self._truck.getId()) +\
             "\nDelivery Status: " + self._deliveryStatus + \
-            "\n-------------------------"
+            "\n--------------------------------------------\n"
         print(printStream)
 
 
