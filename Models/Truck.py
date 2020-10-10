@@ -43,26 +43,24 @@ class Truck:
         else:
             print("cargo is full. :", self._truckId)
 
-    def startRoute(self, currentTime, graph, locations):
-        # reset delivery status from last time user called this function during UI while loop
-        for p in self._packages:
-            p.setDeliveryStatus("not delivered\n")
+    def startRoute(self, currentTime, graph):
 
-# need to somehow make sure this only changes address after 10:20 and delivers after 10:20
-        if self._truckId == 3:
-            routesLastLocation = self.getRoute()[len(self.getRoute()) - 1][0]
-            package = None
-            for p in range(len(self.getPackages())):
-                if self.getPackages()[p].getId() == 8:
-                    address = '410 S State St'
-                    self.getPackages()[p]._address = address
-                    package = self.getPackages()[p]
-            self.appendRoute(graph, routesLastLocation, locations, package)
         # set the starting time to total minutes from midnight
         startTimeMinutes = timestampToMinutes(self._timeLeftHub)
         # convert current time to minutes from midnight
         # then subtract startTimeMinutes to find total minutes from time left hub
         currentTimeMinutes = timestampToMinutes(currentTime) - startTimeMinutes
+        # set delivery status and correct package number 8 to correct address at 10:20
+        for p in self._packages:
+            packageId = p.getId()
+            if currentTimeMinutes < 620 and packageId == 8:
+                p.setValidity(False)
+            elif currentTimeMinutes > 620 and packageId == 8:
+                routesLastLocationList = self.getRoute()[len(self.getRoute()) - 1]
+                address = '410 S State St'
+                p._address = address
+                p.setValidity(True)
+                self.appendRoute(graph, routesLastLocationList, p)
 
         # loop through truck route and set condition to advance only for locations before current time
         for i in range(len(self._route)):
@@ -71,24 +69,28 @@ class Truck:
             deliveryTimeMinutes = timestampToMinutes(deliveryTime) - startTimeMinutes
             if currentTimeMinutes > deliveryTimeMinutes:
                 for p in self._packages:
-                    if p.getAddress() == deliveryLocation.getAddress():
+                    if p.getAddress() == deliveryLocation.getAddress() and p.valid():
                         p.setDeliveryStatus("delivered to " +
                                             deliveryLocation.getTitle() +
                                             " at " + deliveryTime)
 
-    def appendRoute(self, graph, lastLocation, locations, package):
+    def appendRoute(self, graph, lastLocationList, package):
         # total distance from lastLocation
-
+        locations = graph.getLocations()
+        lastLocation = lastLocationList[0]
+        lastDeliveryTime = lastLocationList[1]
         for l in range(locations.getSize()):
             if package.getAddress() == locations.getValue(l).getAddress():
                 location = locations.getValue(l)
-                u = lastLocation.getIndex()
+                u = lastLocationList[0].getIndex()
                 v = location.getIndex()
-                distance = graph.getDistance(u, v)
-                self._route.append([location, milesToTime(self._timeLeftHub, distance)])
+                distanceFromLastLocation = graph.getDistance(u, v)
+                deliveryTime = milesToTime(lastDeliveryTime, distanceFromLastLocation)
+                self._route.append([location, deliveryTime])
 
     # greedy algo customized to to route eraly morning deadlines first
-    def createRoute(self, graph, Hub, locations):
+    def createRoute(self, graph, Hub):
+        locations = graph.getLocations()
         # create a list of locations that need to be visited before 10:30
         amDestinations = []
         # create a list of locations that need to be visited by EOD

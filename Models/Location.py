@@ -6,10 +6,6 @@ class Location:
         self._address = address
         self._city = "Salt Lake City"
         self._zipCode = zipCode
-        self._packages = []
-
-    def getPackages(self):
-        return self._packages
 
     def getAddress(self):
         return self._address

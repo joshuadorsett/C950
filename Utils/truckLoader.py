@@ -1,8 +1,10 @@
 from Models.Truck import Truck
+from Utils.dataHandler import makeHashTableOfPackages
 
 
-def truckLoader(packages):
+def truckLoader():
     # trucks loaded manually based on priority and special notes
+    packages = makeHashTableOfPackages()
 
     truckOne = Truck(1, '8:00')
     truckOneCargo = [13, 14, 15, 33, 19, 20, 0, 22, 10, 9, 11, 16, 18]
@@ -19,7 +21,6 @@ def truckLoader(packages):
         package.setTruck(truckTwo)
 
     truckThree = Truck(3, '9:05')
-    packages.getValue(8).setAddress = '410 S State St.'
     truckThreeCargo = [24, 25, 27, 31, 5, 30, 8, 32, 1, 23, 11, 21]
 
     for i in range(len(truckThreeCargo)):

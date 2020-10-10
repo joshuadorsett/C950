@@ -8,6 +8,7 @@ class Package:
         self._weight = weight
         self._specialNote = specialNote
         self._deliveryStatus = "not delivered\n"
+        self._validInfo = True
         self._truck = None
 
     def setDeliveryStatus(self, status):
@@ -27,6 +28,13 @@ class Package:
 
     def getDeadline(self):
         return self._deadline
+
+    # this will be set to true unless a package has a note about wrong address information like package 8
+    def valid(self):
+        return self._validInfo
+
+    def setValidity(self, value):
+        self._validInfo = value
 
     # print method that prints out all information for a specific package object
     def print(self):
