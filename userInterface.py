@@ -14,53 +14,41 @@ def userInterface(running):
           "          ---------------------------------------- \n")
     # starts a while loop with a bool value names 'running' set to true in the argument
     while running:
-
         # builds a map of locations using the graph data structure in DataStructures.Graph.py
         # time - O(N^2)
         deliveryMap = Graph()
-
         # sets the starting point of the graph to the Hub inside of the graph's vertices Hash table
         # time - O(N)
         Hub = deliveryMap.getLocations().getValue(0)
-
         # loads trucks in Utils.truckLoader.py and returns a list of 3 trucks
         # time - O(N)
         trucks = truckLoader()
-
         # creates routes for each truck using a modified Dijkstra's shortest path algorithm
         # time- O(N)
         trucks[0].createRoute(deliveryMap, Hub)
         trucks[1].createRoute(deliveryMap, Hub)
         trucks[2].createRoute(deliveryMap, Hub)
-
         # calculates route cost from each truck
         route1Cost = routeCost(trucks[0].getRoute(), deliveryMap)
         route2Cost = routeCost(trucks[1].getRoute(), deliveryMap)
         route3Cost = routeCost(trucks[2].getRoute(), deliveryMap)
-
         # calculates a total cost for all trucks and rounds up to integer value
         totalCostOfRoutes = int(route1Cost + route2Cost + route3Cost) + 1
-
         # asks user how they want to proceed into program with the following choices
         inputStream = input("enter 'p' to print all package information for a certain time.\n"
                             "enter 'l' to lookup a specific package by index for a certain time.\n"
                             "enter 'e' to end program.\n")
-
         # if user chose to print all package info, this branch is selected
         if inputStream == 'p':
-
             # asks user to enter the time fo day they want the delivery status for
             currentTime = input(
                 "enter a time to lookup in the format 'hh:mm' or leave blank and hit enter for end of day.\n"
                 "please use 24 hour time.\n")
-
             # if user left the choice blank to see end of day status, this branch is selected
             if currentTime == '':
-
                 # the current time is set to midnight
                 currentTime = '24:00'
             # if previous input function was not left blank, currentTime is the value the user entered
-
             # loops through list of 3 trucks
             for truck in trucks:
                 # start route for current truck with user inputted time
@@ -70,7 +58,8 @@ def userInterface(running):
                     # use print method to print out current package information
                     package.print()
             # print total cost for all routes
-            print("    The total mileage for all completed routes is", totalCostOfRoutes, "\n\n")
+            print("    The total mileage for all completed routes is", totalCostOfRoutes, "\n"
+                  "    All deadlines met.\n\n")
         # if user chose to find a  specific package, this branch is selected
         if inputStream == 'l':
             # asks user to enter the time fo day they want the delivery status for
@@ -215,7 +204,8 @@ def userInterface(running):
                                 # print package
                                 package.print()
             # print total cost of all routes
-            print("    The total mileage for all completed routes is", totalCostOfRoutes, "\n\n")
+            print("    The total mileage for all completed routes is", totalCostOfRoutes, "\n"
+                  "    All deadlines met.\n\n")
         # if user chose to end program
         elif inputStream == 'e':
             # set running to false which will end while loop

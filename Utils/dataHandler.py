@@ -64,7 +64,8 @@ def makeHashTableOfDistances():
     return distances
 
 
-# time - O(N^2)
+# reads and organizes string data from data file
+# time - O(N)
 def readDistances():
     # opens the data file
     distanceFile = open('Data/distances.txt')
@@ -86,7 +87,8 @@ def readDistances():
     return distanceLists
 
 
-# time - O(N^2)
+# reads and organizes string data from data file
+# time - O(N)
 def readLocations():
     # opens the data file
     locationFile = open('Data/locations.txt')
@@ -108,7 +110,8 @@ def readLocations():
     return locationLists
 
 
-# time - O(N^2)
+# reads and organizes string data from data file
+# time - O(N)
 def readPackages():
     # opens the data file
     packageFile = open('Data/packages.txt')

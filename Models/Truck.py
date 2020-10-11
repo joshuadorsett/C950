@@ -38,13 +38,10 @@ class Truck:
     # creates routes for each truck using a modified Dijkstra's shortest path algorithm
     def createRoute(self, graph, Hub):
         locations = graph.getLocations()
-
         # create a list of locations that need to be visited before 10:30
         priorityDestinations = []
-
         # create a list of locations that need to be visited by EOD
         eodDestinations = []
-
         # if deadline is not EOD add location to priorityDestinations and if it EOD add it to eodDestinations
         # O(N^2)
         for i in range(locations.getSize()):
@@ -114,7 +111,6 @@ class Truck:
                     priorityDestinations.pop(closestLocationIndex)
                     # if location is found this breaks this current for loop to save time since value is found
                     break
-
             # if this is a unique address
             if not repeatAddress:
                 # the location is popped from queue and added to route
@@ -205,7 +201,6 @@ class Truck:
                 p.setValidity(True)
                 # appends new address to end of route using append route method
                 self.appendRoute(graph, routesLastLocationList, p)
-
         # loop through truck route
         # time - O(N^2)
         for i in range(len(self._route)):
