@@ -20,6 +20,7 @@ class Graph:
     # time - O(1)
     def getDistance(self, vertA, vertB):
         # returns distance value from the matrix of distances in the hash table distances
+        # converts it to from string to float here to avoid a nested loop of converting them in dataHandler.py
         return float(self._edges.getValue(vertA)[vertB])
 
     # returns the hash table of locations
