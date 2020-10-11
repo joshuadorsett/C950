@@ -7,7 +7,6 @@ class Truck:
     def __init__(self, truckId, timeLeftHub):
         self._truckId = truckId
         self._maxCargo = 16
-        self._cargoSize = 0
         self._cargo = []
         self._route = []
         self._miles = 0.0
@@ -29,9 +28,10 @@ class Truck:
 
     # adds a package object into trucks cargo list
     def addCargo(self, package):
-        if self._cargoSize < self._maxCargo:
+        # if cargo size is less than max capacity
+        if len(self._cargo) < self._maxCargo:
+            # append package to cargo
             self._cargo.append(package)
-            self._cargoSize += 1
         else:
             print("cargo is full. :", self._truckId)
 
@@ -48,7 +48,7 @@ class Truck:
             for j in range(len(self._cargo)):
                 # set variable to current package in loop
                 package = self._cargo[j]
-                # set variable to curret packages deadline
+                # set variable to current packages deadline
                 deadline = package.getDeadline()
                 # if the deadline is not EOD
                 if deadline != 'EOD':
