@@ -1,3 +1,4 @@
+# class location
 class Location:
 
     def __init__(self, index, title, address, zipCode):

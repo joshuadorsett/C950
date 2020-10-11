@@ -4,10 +4,14 @@ from Models.Package import *
 
 
 # returns a hash table of package objects
+# time - O(N)
 def makeHashTableOfPackages():
     packageLists = readPackages()
     packages = HashTable(len(packageLists))
     for i in range(len(packageLists)):
+        packageLists[i][0] = int(packageLists[i][0])
+        packageLists[i][4] = int(packageLists[i][4])
+        packageLists[i][6] = int(packageLists[i][6])
         current = packageLists[i]
         p = Package(current[0], current[1], current[2], current[4], current[5], current[6], current[7])
         packages.insert(current[0], p)
@@ -15,10 +19,13 @@ def makeHashTableOfPackages():
 
 
 # returns a hash table of location objects
+# time - O(N)
 def makeHashTableOfLocations():
     locationLists = readLocations()
     locations = HashTable(len(locationLists))
     for i in range(len(locationLists)):
+        locationLists[i][0] = int(locationLists[i][0])
+        locationLists[i][3] = int(locationLists[i][3])
         current = locationLists[i]
         l = Location(current[0], current[1], current[2], current[3])
         locations.insert(l.getIndex(), l)
@@ -27,58 +34,59 @@ def makeHashTableOfLocations():
 
 # returns a hash table with the key being LocationA and the key is a list of distances to any LocationB
 # by using the getIndex method in the Location class we can access any distance once this list is created
+# time - O(N)
 def makeHashTableOfDistances():
     distanceLists = readDistances()
     distances = HashTable(len(distanceLists))
-    for LocationAIndex in range(len(distanceLists)):
-        ListOfDistancesFromLocationA = distanceLists[LocationAIndex]
-        distances.insert(LocationAIndex, ListOfDistancesFromLocationA)
+    for i in range(len(distanceLists)):
+        ListOfDistancesFromLocationA = distanceLists[i]
+        distances.insert(i, ListOfDistancesFromLocationA)
     return distances
 
 
+# time - O(N^2)
 def readDistances():
     distanceFile = open('Data/distances.txt')
     try:
         strings = distanceFile.readlines()
     finally:
         distanceFile.close()
-    distances = []
+    distanceLists = []
     for i in range(len(strings)):
-        distances.append(strings[i].split(','))
-    for i in range(len(distances)):
-        for j in range(len(distances[0])):
-            distances[i][j] = float(distances[i][j])
-    return distances
+        distanceLists.append(strings[i].split(','))
+    return distanceLists
 
 
+# time - O(N^2)
 def readLocations():
     locationFile = open('Data/locations.txt')
     try:
         strings = locationFile.readlines()
     finally:
         locationFile.close()
-    locations = []
+    locationLists = []
     for i in range(len(strings)):
-        locations.append(strings[i].split(','))
-    for i in range(len(locations)):
-        for j in range(len(locations[0])):
-            locations[i][0] = int(locations[i][0])
-            locations[i][3] = int(locations[i][3])
-    return locations
+        locationLists.append(strings[i].split(','))
+    return locationLists
 
 
+# time - O(N^2)
 def readPackages():
+    # opens the data file
     packageFile = open('Data/packages.txt')
     try:
+        # tries to read each line
+        # returns a list of lines to the strings list
         strings = packageFile.readlines()
     finally:
+        # closes the data file
         packageFile.close()
+    # initializes a list for packages to append to
     packages = []
+    # loops through each line in strings list
     for i in range(len(strings)):
+        # split function returns a list of every value split by a ',' for that string
+        # split list is appended to i'th element in the packages list
         packages.append(strings[i].split(','))
-    for i in range(len(packages)):
-        for j in range(len(packages[0])):
-            packages[i][0] = int(packages[i][0])
-            packages[i][4] = int(packages[i][4])
-            packages[i][6] = int(packages[i][6])
+    # returns the list of package information
     return packages

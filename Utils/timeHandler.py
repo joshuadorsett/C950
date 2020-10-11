@@ -29,4 +29,3 @@ def milesToTime(startTime, distanceFromStart):
     minutesFromStart = distanceFromStart / 0.3
     minutesFromMidnight = totalStartingMinutes + minutesFromStart
     return minutesToTimestamp(minutesFromMidnight)
-

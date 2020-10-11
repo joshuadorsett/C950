@@ -93,22 +93,27 @@ class Truck:
 
     # greedy algo customized to to route eraly morning deadlines first
     def createRoute(self, graph, Hub):
-        locations = graph.getLocations()        # create a list of locations that need to be visited before 10:30
-        amDestinations = []
+        locations = graph.getLocations()
+
+        # create a list of locations that need to be visited before 10:30
+        priorityDestinations = []
+
         # create a list of locations that need to be visited by EOD
         eodDestinations = []
-        # if deadline is not EOD add location to amDestinations and if it EOD add it to eodDestinations
+
+        # if deadline is not EOD add location to priorityDestinations and if it EOD add it to eodDestinations
+        # O(N^2)
         for i in range(locations.getSize()):
             for j in range(len(self._packages)):
-                # repeat = False
                 package = self._packages[j]
                 deadline = package.getDeadline()
                 if deadline != 'EOD':
                     if locations.getValue(i).getAddress() == package.getAddress():
-                        amDestinations.append(locations.getValue(i))
+                        priorityDestinations.append(locations.getValue(i))
                 else:
                     if locations.getValue(i).getAddress() == package.getAddress():
                         eodDestinations.append(locations.getValue(i))
+
 
         # total distance from start point
         distanceFromStart = 0
@@ -119,32 +124,48 @@ class Truck:
         # bool used to remove repeated addresses in the route
         repeatAddress = False
 
-
-        # greedy algo for morning destinations
-        while len(amDestinations) > 0:
+        # shortest path algo loop for priority destinations only
+        # this ensures that priority packages are delivered first
+        # O(NLOGN) - every time it appends the route the queue pops the locations so the queue's size is log
+        while len(priorityDestinations) > 0:
             closestLocation = Hub
             closestLocationIndex = 0
             shortestDistance = 100
-            for i in range(len(amDestinations)):
+
+            # uses the shortest path algorithm to find next shortest distance in the queue
+            # O(N)
+            for i in range(len(priorityDestinations)):
                 u = currentLocation.getIndex()
-                v = amDestinations[i].getIndex()
+                v = priorityDestinations[i].getIndex()
+                # calls the get distance method in the Graph class
+
                 distance = graph.getDistance(u, v)
                 if shortestDistance > distance:
-                    closestLocation = amDestinations[i]
+                    closestLocation = priorityDestinations[i]
                     closestLocationIndex = i
                     shortestDistance = distance
                     distanceFromStart += distance
+
+            # checks to see if this is a repeated address by looping through route
+            # O(N)
             for loc in route:
-                if amDestinations[closestLocationIndex].getIndex() == loc[0].getIndex():
+                if priorityDestinations[closestLocationIndex].getIndex() == loc[0].getIndex():
+                    # since the location has been visited it is popped from queue w/o being appended to route
                     repeatAddress = True
-                    amDestinations.pop(closestLocationIndex)
+                    priorityDestinations.pop(closestLocationIndex)
                     break
+
+            # if this is a unique address the location is popped from queue and added to route
             if not repeatAddress:
-                route.append([amDestinations.pop(closestLocationIndex), milesToTime(self._timeLeftHub, distanceFromStart)])
+                route.append(
+                    [priorityDestinations.pop(closestLocationIndex), milesToTime(self._timeLeftHub, distanceFromStart)])
                 currentLocation = closestLocation
             repeatAddress = False
 
-        # greedy algo for eod destinations
+        # runs through the algorithm again for the second list of packages with an eod deadline
+        # this ensures that priority packages are delivered first
+        # if the eod package location has been visited in previous algorithm then it will not be repeated
+        # O(NLOGN) - every time it appends the route the queue pops the locations so the queue's size is log
         while len(eodDestinations) > 0:
             closestLocation = currentLocation
             closestLocationIndex = currentLocation.getIndex()
@@ -164,7 +185,8 @@ class Truck:
                     eodDestinations.pop(closestLocationIndex)
                     break
             if not repeatAddress:
-                route.append([eodDestinations.pop(closestLocationIndex), milesToTime(self._timeLeftHub, distanceFromStart)])
+                route.append(
+                    [eodDestinations.pop(closestLocationIndex), milesToTime(self._timeLeftHub, distanceFromStart)])
                 currentLocation = closestLocation
             repeatAddress = False
 
