@@ -7,8 +7,6 @@ class HashTable:
     def __init__(self, startingCapacity=40):
         # initializes a list
         self._table = []
-        # initializes an integer to track size of occupied buckets
-        self._size = 0
         # sets each element of the list to an empty list or "bucket"
         for i in range(startingCapacity):
             self._table.append([])
@@ -27,8 +25,6 @@ class HashTable:
         bucketList = self._table[bucket]
         # the bucket list is appended with new item
         bucketList.append([key, value])
-        # increment size
-        self._size += 1
 
     # returns a value for the given key
     # time - O(1) - O(N)
@@ -44,9 +40,9 @@ class HashTable:
                 # return value
                 return bucketList[i][1]
 
-    # returns the size of the table that is not set to None
+    # returns the size of the table
     def getSize(self):
-        return self._size
+        return len(self._table)
 
     # deletes a bucket by setting it to None
     def delete(self, item):
@@ -56,5 +52,3 @@ class HashTable:
         # removes item from bucket list
         if item in bucketList:
             bucketList.remove(item)
-            # decrement size
-            self._size -= 1
