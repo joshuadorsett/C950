@@ -1,4 +1,4 @@
-from DataStructures.HashTable import *
+from DataStructures.HashTable import HashTable
 from Models.Location import *
 from Models.Package import *
 # a group of static functions related to handling data files
