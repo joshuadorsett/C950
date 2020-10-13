@@ -55,15 +55,15 @@ class Package:
     # print method that prints out all information for a specific package
     def print(self):
         printStream = "    ID: " + str(self._packageId) + \
-            "\n    Address: " + self._address + \
-            "\n    City: " + self._city + \
-            "\n    ZipCode: " + str(self._zipCode) + \
-            "\n    Deadline: " + self._deadline + \
-            "\n    Weight: " + str(self._weight) + \
+            "    Address: " + self._address + \
+            "    City: " + self._city + \
+            "    ZipCode: " + str(self._zipCode) + \
+            "    Deadline: " + self._deadline + \
+            "    Weight: " + str(self._weight) + \
             "\n    Special Note: " + self._specialNote + \
             "    Assigned to Truck: " + str(self._truck.getId()) +\
-            "\n    Delivery Status: " + self._deliveryStatus + \
-            "\n\n"
+            "    Delivery Status: " + self._deliveryStatus + \
+            "\n"
         print(printStream)
 
 

@@ -72,7 +72,7 @@ class Truck:
         repeatAddress = False
         # shortest path algo loop for priority destinations only
         # this ensures that priority packages are delivered first
-        # time - O(NLOGN) - every time it appends the route the queue pops the locations so the queue's size is log
+        # time - O(N^2)
         # while the priority list is not empty
         while len(priorityDestinations) > 0:
             # set closestLocation to the hub (this is an argument)
@@ -123,7 +123,7 @@ class Truck:
         # runs through the algorithm again for the second list of packages with an eod deadline
         # this ensures that priority packages are delivered first
         # if the eod package location has been visited in previous algorithm then it will not be repeated
-        # O(NLOGN) - every time it appends the route the queue pops the locations so the queue's size is log
+        # time O(N^2)
         while len(eodDestinations) > 0:
             # set closestLocation to the last location added to the route
             closestLocation = currentLocation
@@ -169,7 +169,6 @@ class Truck:
                 currentLocation = closestLocation
             # repeat address variable is reset to false for the next iteration in the while loop
             repeatAddress = False
-        # sets the functions route list to this truck object's 'self._route' list
         self._route = route
 
     # this method virtually delivers packages in trucks route up to given time
